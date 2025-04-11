@@ -117,6 +117,28 @@ class ReminderManager: ObservableObject {
         saveLists()
     }
     
+    func adjustPriority(_ reminder: Reminder, in listId: UUID, increase: Bool) {
+        print("Adjusting priority for reminder: \(reminder.title) in list \(listId)")
+        guard let listIndex = lists.firstIndex(where: { $0.id == listId }),
+              let reminderIndex = lists[listIndex].reminders.firstIndex(where: { $0.id == reminder.id }) else { return }
+        
+        let currentPriority = lists[listIndex].reminders[reminderIndex].priorityLevel
+        let newPriority = increase ? max(currentPriority - 1, 1) : min(currentPriority + 1, 5)
+        
+        lists[listIndex].reminders[reminderIndex].priorityLevel = newPriority
+        saveLists()
+    }
+    
+    func setPriority(_ reminder: Reminder, in listId: UUID, level: Int) {
+        print("Setting priority level \(level) for reminder: \(reminder.title) in list \(listId)")
+        guard let listIndex = lists.firstIndex(where: { $0.id == listId }),
+              let reminderIndex = lists[listIndex].reminders.firstIndex(where: { $0.id == reminder.id }) else { return }
+        
+        let newPriority = min(max(level, 1), 5)
+        lists[listIndex].reminders[reminderIndex].priorityLevel = newPriority
+        saveLists()
+    }
+    
     func selectedList() -> ReminderList? {
         return lists.first { $0.id == selectedListId }
     }
