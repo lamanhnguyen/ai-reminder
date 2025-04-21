@@ -45,8 +45,8 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
     
     /// Initialize the Core Data service
-    init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "VoiceReminders")
+    init(modelName: String = "VoiceReminders", inMemory: Bool = false) {
+        container = NSPersistentContainer(name: modelName)
         
         if inMemory {
             let description = NSPersistentStoreDescription()
@@ -130,7 +130,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     func updateReminder(_ reminder: Reminder) async throws {
         try await performBackgroundTask { context in
             let fetchRequest: NSFetchRequest<ReminderEntity> = ReminderEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %@", reminder.id)
+            fetchRequest.predicate = NSPredicate(format: "id == %@", reminder.id as CVarArg)
             
             guard let entity = try context.fetch(fetchRequest).first else {
                 throw PersistenceError.entityNotFound
@@ -144,7 +144,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     func deleteReminder(_ reminder: Reminder) async throws {
         try await performBackgroundTask { context in
             let fetchRequest: NSFetchRequest<ReminderEntity> = ReminderEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %@", reminder.id)
+            fetchRequest.predicate = NSPredicate(format: "id == %@", reminder.id as CVarArg)
             
             guard let entity = try context.fetch(fetchRequest).first else {
                 throw PersistenceError.entityNotFound
