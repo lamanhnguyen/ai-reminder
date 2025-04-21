@@ -37,7 +37,7 @@ protocol CoreDataServiceProtocol {
 final class CoreDataService: CoreDataServiceProtocol {
     /// Persistent container for Core Data
     private let container: NSPersistentContainer
-    private let remindersSubject = CurrentValueSubject<[Reminder], Error>([])
+    private let remindersSubject = CurrentValueSubject<[Reminder], Never>([])
     
     /// Main view context for Core Data operations
     var viewContext: NSManagedObjectContext {
