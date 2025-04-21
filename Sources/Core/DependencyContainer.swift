@@ -3,6 +3,11 @@ import CoreData
 import Combine
 import UserNotifications
 
+/// Protocol for services that can be reset to their initial state
+protocol Resettable {
+    nonisolated func reset()
+}
+
 /// A container that manages all service dependencies for the app
 @MainActor
 final class DependencyContainer: ObservableObject {
@@ -61,27 +66,29 @@ final class DependencyContainer: ObservableObject {
         isInitialized = true
     }
     
-    func reset() {
-        // Reset all services to their initial state
-        cancellables.removeAll()
-        if let resetableService = remindersService as? Resettable {
-            resetableService.reset()
+    nonisolated func reset() {
+        Task { @MainActor in
+            // Reset all services to their initial state
+            cancellables.removeAll()
+            if let resetableService = remindersService as? Resettable {
+                resetableService.reset()
+            }
+            if let resetableService = coreDataService as? Resettable {
+                resetableService.reset()
+            }
+            if let resetableService = voiceRecognitionService as? Resettable {
+                resetableService.reset()
+            }
+            if let resetableService = notificationService as? Resettable {
+                resetableService.reset()
+            }
+            
+            // Clear stored service instances
+            _remindersService = nil
+            _coreDataService = nil
+            _voiceRecognitionService = nil
+            _notificationService = nil
         }
-        if let resetableService = coreDataService as? Resettable {
-            resetableService.reset()
-        }
-        if let resetableService = voiceRecognitionService as? Resettable {
-            resetableService.reset()
-        }
-        if let resetableService = notificationService as? Resettable {
-            resetableService.reset()
-        }
-        
-        // Clear stored service instances
-        _remindersService = nil
-        _coreDataService = nil
-        _voiceRecognitionService = nil
-        _notificationService = nil
     }
     
     // MARK: - Private Methods
@@ -149,34 +156,31 @@ final class DependencyContainer: ObservableObject {
     private var _notificationService: NotificationServiceProtocol?
 }
 
-// MARK: - Resettable Protocol
-
-protocol Resettable {
-    func reset()
-}
-
 // MARK: - Service Extensions
 
 extension RemindersService: Resettable {
-    func reset() {
+    nonisolated func reset() {
         // Clear any cached data or state
     }
 }
 
 extension CoreDataService: Resettable {
-    func reset() {
+    nonisolated func reset() {
         // Delete all stored data and recreate store
     }
 }
 
 extension VoiceRecognitionService: Resettable {
-    func reset() {
+    nonisolated func reset() {
         // Reset recognition state
     }
 }
 
 extension NotificationService: Resettable {
-    func reset() {
+    nonisolated func reset() {
         // Clear all scheduled notifications
+        Task {
+            try? await self.cancelAllNotifications()
+        }
     }
 } 

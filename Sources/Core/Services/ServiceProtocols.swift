@@ -16,6 +16,36 @@ protocol CoreDataServiceProtocol {
     
     /// Create a new background context
     func newBackgroundContext() -> NSManagedObjectContext
+    
+    /// Perform a fetch request and return the results
+    func fetch<T>(_ request: NSFetchRequest<T>) throws -> [T] where T: NSFetchRequestResult
+    
+    /// Delete an object from Core Data
+    func delete(_ object: NSManagedObject) throws
+    
+    /// Delete multiple objects from Core Data
+    func delete(_ objects: [NSManagedObject]) throws
+    
+    /// Publisher for changes in a specific entity type
+    func publisher<T: NSManagedObject>(for entityName: String) -> AnyPublisher<[T], Error>
+    
+    /// Publisher for reminder changes
+    var remindersPublisher: AnyPublisher<[Reminder], Never> { get }
+    
+    /// Create a new reminder
+    func createReminder(_ reminder: Reminder) async throws
+    
+    /// Update an existing reminder
+    func updateReminder(_ reminder: Reminder) async throws
+    
+    /// Delete a reminder
+    func deleteReminder(_ reminder: Reminder) async throws
+    
+    /// Delete all reminders
+    func deleteAllReminders() async throws
+    
+    /// Fetch all reminders
+    func fetchReminders() async throws -> [Reminder]
 }
 
 // MARK: - Reminders Service Protocol
