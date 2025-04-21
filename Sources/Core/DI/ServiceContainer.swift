@@ -1,28 +1,6 @@
 import Foundation
 import SwiftUI
 
-// MARK: - Service Protocols
-
-/// Protocol for managing Core Data persistence operations
-protocol CoreDataServiceProtocol {
-    // Core Data operations will be added here
-}
-
-/// Protocol for managing reminders
-protocol RemindersServiceProtocol {
-    // Reminder operations will be added here
-}
-
-/// Protocol for voice recognition capabilities
-protocol VoiceRecognitionServiceProtocol {
-    // Voice recognition operations will be added here
-}
-
-/// Protocol for managing notifications
-protocol NotificationServiceProtocol {
-    // Notification operations will be added here
-}
-
 // MARK: - Service Container
 
 /// Main dependency injection container for the app

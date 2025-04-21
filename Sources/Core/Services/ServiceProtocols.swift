@@ -22,11 +22,14 @@ protocol CoreDataServiceProtocol {
 
 /// Protocol for managing reminders
 protocol RemindersServiceProtocol {
+    /// Publisher that emits the current list of reminders
+    var remindersPublisher: AnyPublisher<[Reminder], Never> { get }
+    
     /// Fetch all reminders
     func fetchReminders() async throws -> [Reminder]
     
     /// Create a new reminder
-    func createReminder(title: String, notes: String?, dueDate: Date?, priority: ReminderPriority) async throws -> Reminder
+    func createReminder(_ reminder: Reminder) async throws
     
     /// Update an existing reminder
     func updateReminder(_ reminder: Reminder) async throws
@@ -34,8 +37,11 @@ protocol RemindersServiceProtocol {
     /// Delete a reminder
     func deleteReminder(_ reminder: Reminder) async throws
     
-    /// Mark a reminder as completed
-    func completeReminder(_ reminder: Reminder) async throws
+    /// Delete all reminders
+    func deleteAllReminders() async throws
+    
+    /// Toggle the completion status of a reminder
+    func toggleReminderCompletion(_ reminder: Reminder) async throws
     
     /// Search for reminders
     func searchReminders(query: String) async throws -> [Reminder]

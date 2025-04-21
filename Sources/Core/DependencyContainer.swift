@@ -1,6 +1,7 @@
 import Foundation
 import CoreData
 import Combine
+import UserNotifications
 
 /// A container that manages all service dependencies for the app
 @MainActor
@@ -45,7 +46,7 @@ final class DependencyContainer: ObservableObject {
     private func setupObservers() {
         // Observe any service state changes that might affect the app
         notificationService.authorizationStatus
-            .sink { [weak self] status in
+            .sink { [weak self] (status: UNAuthorizationStatus) in
                 // Handle notification authorization changes
                 self?.handleNotificationAuthorizationChange(status)
             }
@@ -85,9 +86,29 @@ final class DependencyContainer: ObservableObject {
     
     // MARK: - Private Methods
     
-    private func handleNotificationAuthorizationChange(_ status: NotificationAuthorizationStatus) {
+    private func handleNotificationAuthorizationChange(_ status: UNAuthorizationStatus) {
         // Handle changes in notification authorization
         // This could trigger UI updates or affect reminder functionality
+        switch status {
+        case .authorized:
+            // User has granted notification permissions
+            break
+        case .denied:
+            // User has denied notification permissions
+            break
+        case .notDetermined:
+            // Permission hasn't been requested yet
+            break
+        case .provisional:
+            // Provisional authorization granted
+            break
+        case .ephemeral:
+            // Ephemeral authorization granted (App Clips)
+            break
+        @unknown default:
+            // Handle future authorization status
+            break
+        }
     }
     
     // MARK: - Testing Support

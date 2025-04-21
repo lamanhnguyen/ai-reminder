@@ -2,30 +2,6 @@ import Foundation
 import CoreData
 import Combine
 
-/// Protocol defining the operations available for managing reminders
-protocol RemindersServiceProtocol {
-    /// Publisher that emits the current list of reminders
-    var remindersPublisher: AnyPublisher<[Reminder], Error> { get }
-    
-    /// Create a new reminder
-    func createReminder(_ reminder: Reminder) async throws
-    
-    /// Update an existing reminder
-    func updateReminder(_ reminder: Reminder) async throws
-    
-    /// Delete a specific reminder
-    func deleteReminder(_ reminder: Reminder) async throws
-    
-    /// Delete all reminders
-    func deleteAllReminders() async throws
-    
-    /// Toggle the completion status of a reminder
-    func toggleReminderCompletion(_ reminder: Reminder) async throws
-    
-    /// Fetch all reminders
-    func fetchReminders() async throws -> [Reminder]
-}
-
 /// Service responsible for managing reminders, coordinating between persistence and notifications
 final class RemindersService: RemindersServiceProtocol {
     private let coreDataService: CoreDataServiceProtocol
@@ -36,7 +12,7 @@ final class RemindersService: RemindersServiceProtocol {
         self.notificationService = notificationService
     }
     
-    var remindersPublisher: AnyPublisher<[Reminder], Error> {
+    var remindersPublisher: AnyPublisher<[Reminder], Never> {
         coreDataService.remindersPublisher
     }
     
