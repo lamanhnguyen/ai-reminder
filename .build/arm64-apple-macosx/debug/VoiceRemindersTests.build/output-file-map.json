@@ -1,0 +1,23 @@
+{
+  "": {
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/master.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Tests/CalendarViewTests.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/CalendarViewTests.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/CalendarViewTests.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/CalendarViewTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/CalendarViewTests.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Tests/ContentViewTests.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/ContentViewTests.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/ContentViewTests.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/ContentViewTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/ContentViewTests.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Tests/VoiceRecognizerTests.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/VoiceRecognizerTests.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/VoiceRecognizerTests.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/VoiceRecognizerTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersTests.build/VoiceRecognizerTests.swiftdeps"
+  }
+}

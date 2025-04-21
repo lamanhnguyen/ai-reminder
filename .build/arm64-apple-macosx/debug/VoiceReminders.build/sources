@@ -1,0 +1,10 @@
+/Users/macmini/Documents/VoiceReminders/Sources/App/VoiceRemindersApp.swift
+/Users/macmini/Documents/VoiceReminders/Sources/Core/ReminderManager.swift
+/Users/macmini/Documents/VoiceReminders/Sources/Core/VoiceRecognizer.swift
+/Users/macmini/Documents/VoiceReminders/Sources/Models/Reminder.swift
+/Users/macmini/Documents/VoiceReminders/Sources/Models/ReminderList.swift
+/Users/macmini/Documents/VoiceReminders/Sources/UI/AddListView.swift
+/Users/macmini/Documents/VoiceReminders/Sources/UI/AddReminderView.swift
+/Users/macmini/Documents/VoiceReminders/Sources/UI/CalendarView.swift
+/Users/macmini/Documents/VoiceReminders/Sources/UI/ContentView.swift
+/Users/macmini/Documents/VoiceReminders/Sources/UI/ListDetailView.swift

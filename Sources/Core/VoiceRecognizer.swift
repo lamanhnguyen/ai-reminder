@@ -15,6 +15,8 @@ extension AVAudioInputNode: AudioInputNode {
     }
 }
 
+@available(macOS 10.15, *)
+@MainActor
 class VoiceRecognizer: NSObject, ObservableObject {
     @Published var isRecording = false
     @Published var recognizedText = ""
@@ -50,6 +52,8 @@ class VoiceRecognizer: NSObject, ObservableObject {
     
     // Add new property to track if we're waiting for final result
     private var waitingForFinalResult = false
+    
+    private var isShuttingDown = false
     
     init(audioEngine: AVAudioEngine) {
         super.init()
@@ -104,10 +108,8 @@ class VoiceRecognizer: NSObject, ObservableObject {
         #endif
         
         let inputNode = audioEngine.inputNode
-        guard let avInputNode = inputNode as? AVAudioInputNode else {
-            throw VoiceRecognizerError.invalidInputNode
-        }
-        self.inputNode = avInputNode
+        // AVAudioEngine.inputNode is already of type AVAudioInputNode, so no cast needed
+        self.inputNode = inputNode
     }
     
     private func updateDebugInfo(_ message: String) {
@@ -122,27 +124,34 @@ class VoiceRecognizer: NSObject, ObservableObject {
         lastSpeechTime = Date()
         consecutiveSpeechFrames = 0
         updateDebugInfo("Silence timer reset - Starting new timer with \(silenceTimeout)s timeout")
+        
+        // Create a weak reference to avoid retain cycles
+        weak var weakSelf = self
+        
+        // Capture only what we need in the timer closure
+        let currentSilenceTimeout = silenceTimeout
+        
         silenceTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            
-            if let lastSpeech = self.lastSpeechTime {
-                let timeSinceLastSpeech = Date().timeIntervalSince(lastSpeech)
-                let timeRemaining = self.silenceTimeout - timeSinceLastSpeech
+            Task { @MainActor in
+                guard let self = self else { return }
                 
-                if timeSinceLastSpeech >= self.silenceTimeout && self.hasDetectedSpeech && !self.waitingForFinalResult {
-                    self.updateDebugInfo("Silence timeout reached (\(timeSinceLastSpeech)s of silence), stopping recording")
-                    self.waitingForFinalResult = true
+                if let lastSpeech = self.lastSpeechTime {
+                    let timeSinceLastSpeech = Date().timeIntervalSince(lastSpeech)
+                    let timeRemaining = currentSilenceTimeout - timeSinceLastSpeech
                     
-                    // Reset UI state before ending audio
-                    DispatchQueue.main.async {
+                    if timeSinceLastSpeech >= currentSilenceTimeout && self.hasDetectedSpeech && !self.waitingForFinalResult {
+                        self.updateDebugInfo("Silence timeout reached (\(timeSinceLastSpeech)s of silence), stopping recording")
+                        self.waitingForFinalResult = true
+                        
+                        // Reset UI state before ending audio
                         self.isSpeechDetected = false
                         self.audioLevel = 0.0
                         self.isListening = false
+                        
+                        self.recognitionRequest?.endAudio()
+                    } else if self.hasDetectedSpeech {
+                        self.updateDebugInfo("Time since last speech: \(String(format: "%.1f", timeSinceLastSpeech))s (timeout in \(String(format: "%.1f", timeRemaining))s)")
                     }
-                    
-                    self.recognitionRequest?.endAudio()
-                } else if self.hasDetectedSpeech {
-                    self.updateDebugInfo("Time since last speech: \(String(format: "%.1f", timeSinceLastSpeech))s (timeout in \(String(format: "%.1f", timeRemaining))s)")
                 }
             }
         }
@@ -160,37 +169,37 @@ class VoiceRecognizer: NSObject, ObservableObject {
         }
         let level = sum / Float(frameLength)
         
-        DispatchQueue.main.async { [weak self] in
-            self?.audioLevel = level
-            let isAboveThreshold = level > self?.silenceThreshold ?? 0
-            let wasSpeechDetected = self?.isSpeechDetected ?? false
+        Task { @MainActor in
+            self.audioLevel = level
+            let isAboveThreshold = level > self.silenceThreshold
+            let wasSpeechDetected = self.isSpeechDetected
             
             if isAboveThreshold {
-                self?.consecutiveSpeechFrames += 1
-                if self?.consecutiveSpeechFrames ?? 0 >= self?.requiredConsecutiveFrames ?? 0 {
+                self.consecutiveSpeechFrames += 1
+                if self.consecutiveSpeechFrames >= self.requiredConsecutiveFrames {
                     if !wasSpeechDetected {
-                        self?.updateDebugInfo("Speech detected! Audio level: \(level) (sustained for \(self?.consecutiveSpeechFrames ?? 0) frames)")
-                        self?.speechStartTime = Date()
+                        self.updateDebugInfo("Speech detected! Audio level: \(level) (sustained for \(self.consecutiveSpeechFrames) frames)")
+                        self.speechStartTime = Date()
                     }
-                    self?.isSpeechDetected = true
-                    self?.hasDetectedSpeech = true
-                    self?.lastSpeechTime = Date()
+                    self.isSpeechDetected = true
+                    self.hasDetectedSpeech = true
+                    self.lastSpeechTime = Date()
                 }
             } else {
-                self?.consecutiveSpeechFrames = 0
+                self.consecutiveSpeechFrames = 0
                 if wasSpeechDetected {
-                    if let startTime = self?.speechStartTime,
-                       Date().timeIntervalSince(startTime) >= self?.minimumSpeechDuration ?? 0 {
-                        self?.updateDebugInfo("Speech ended. Audio level: \(level) (duration: \(String(format: "%.1f", Date().timeIntervalSince(startTime)))s)")
+                    if let startTime = self.speechStartTime,
+                       Date().timeIntervalSince(startTime) >= self.minimumSpeechDuration {
+                        self.updateDebugInfo("Speech ended. Audio level: \(level) (duration: \(String(format: "%.1f", Date().timeIntervalSince(startTime)))s)")
                     } else {
-                        self?.updateDebugInfo("Speech too short, ignoring. Audio level: \(level)")
+                        self.updateDebugInfo("Speech too short, ignoring. Audio level: \(level)")
                     }
-                    self?.isSpeechDetected = false
+                    self.isSpeechDetected = false
                 }
             }
             
-            if self?.hasDetectedSpeech == true {
-                self?.updateDebugInfo("Audio level: \(level) (\(isAboveThreshold ? "above" : "below") threshold, consecutive frames: \(self?.consecutiveSpeechFrames ?? 0))")
+            if self.hasDetectedSpeech {
+                self.updateDebugInfo("Audio level: \(level) (\(isAboveThreshold ? "above" : "below") threshold, consecutive frames: \(self.consecutiveSpeechFrames))")
             }
         }
         
@@ -207,12 +216,13 @@ class VoiceRecognizer: NSObject, ObservableObject {
             if retryCount < maxRetries {
                 retryCount += 1
                 updateDebugInfo("Retrying speech recognition (attempt \(retryCount)/\(maxRetries))")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                Task { @MainActor in
+                    try? await Task.sleep(for: .seconds(1))
                     do {
-                        try self?.startRecording()
+                        try self.startRecording()
                     } catch {
-                        self?.errorMessage = "Failed to start recording: \(error.localizedDescription)"
-                        self?.updateDebugInfo("Failed to start recording: \(error.localizedDescription)")
+                        self.errorMessage = "Failed to start recording: \(error.localizedDescription)"
+                        self.updateDebugInfo("Failed to start recording: \(error.localizedDescription)")
                     }
                 }
             } else {
@@ -223,12 +233,13 @@ class VoiceRecognizer: NSObject, ObservableObject {
             if noSpeechRetryCount < maxNoSpeechRetries {
                 noSpeechRetryCount += 1
                 updateDebugInfo("No speech detected, retrying (attempt \(noSpeechRetryCount)/\(maxNoSpeechRetries))")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                Task { @MainActor in
+                    try? await Task.sleep(for: .seconds(0.5))
                     do {
-                        try self?.startRecording()
+                        try self.startRecording()
                     } catch {
-                        self?.errorMessage = "Failed to start recording: \(error.localizedDescription)"
-                        self?.updateDebugInfo("Failed to start recording: \(error.localizedDescription)")
+                        self.errorMessage = "Failed to start recording: \(error.localizedDescription)"
+                        self.updateDebugInfo("Failed to start recording: \(error.localizedDescription)")
                     }
                 }
             } else {
@@ -299,7 +310,9 @@ class VoiceRecognizer: NSObject, ObservableObject {
         }
     }
     
-    deinit {
+    func shutdown() {
+        guard !isShuttingDown else { return }
+        isShuttingDown = true
         stopRecording()
     }
 }

@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersPackageTests.build/master.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersPackageTests.derived/runner.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersPackageTests.build/runner.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersPackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersPackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersPackageTests.build/runner.swiftdeps"
+  }
+}

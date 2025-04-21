@@ -1,0 +1,65 @@
+{
+  "": {
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/master.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/App/VoiceRemindersApp.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/VoiceRemindersApp.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/VoiceRemindersApp.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/VoiceRemindersApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/VoiceRemindersApp.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/Core/ReminderManager.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ReminderManager.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ReminderManager.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ReminderManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ReminderManager.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/Core/VoiceRecognizer.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/VoiceRecognizer.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/VoiceRecognizer.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/VoiceRecognizer~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/VoiceRecognizer.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/Models/Reminder.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/Reminder.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/Reminder.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/Reminder~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/Reminder.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/Models/ReminderList.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ReminderList.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ReminderList.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ReminderList~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ReminderList.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/UI/AddListView.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/AddListView.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/AddListView.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/AddListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/AddListView.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/UI/AddReminderView.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/AddReminderView.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/AddReminderView.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/AddReminderView~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/AddReminderView.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/UI/CalendarView.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/CalendarView.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/CalendarView.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/CalendarView~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/CalendarView.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/UI/ContentView.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ContentView.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ContentView.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ContentView~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ContentView.swiftdeps"
+  },
+  "/Users/macmini/Documents/VoiceReminders/Sources/UI/ListDetailView.swift": {
+    "dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ListDetailView.d",
+    "object": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ListDetailView.swift.o",
+    "swiftmodule": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ListDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceReminders.build/ListDetailView.swiftdeps"
+  }
+}

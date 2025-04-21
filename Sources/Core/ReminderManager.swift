@@ -2,6 +2,7 @@ import Foundation
 import UserNotifications
 import SwiftUI
 
+@available(macOS 10.15, *)
 class ReminderManager: ObservableObject {
     @Published var lists: [ReminderList] = []
     @Published var selectedListId: UUID?
@@ -141,5 +142,26 @@ class ReminderManager: ObservableObject {
     
     func selectedList() -> ReminderList? {
         return lists.first { $0.id == selectedListId }
+    }
+    
+    // Helper methods for retrieving filtered reminders
+    func getTodayReminders() -> [Reminder] {
+        let allReminders = lists.flatMap { $0.reminders }
+        return allReminders.filter { Calendar.current.isDateInToday($0.dueDate) }
+    }
+    
+    func getScheduledReminders() -> [Reminder] {
+        let allReminders = lists.flatMap { $0.reminders }
+        return allReminders.filter { $0.dueDate >= Calendar.current.startOfDay(for: Date()) }
+    }
+    
+    func getPriorityReminders() -> [Reminder] {
+        let allReminders = lists.flatMap { $0.reminders }
+        return allReminders.filter { $0.isPriority }
+    }
+    
+    func getCompletedReminders() -> [Reminder] {
+        let allReminders = lists.flatMap { $0.reminders }
+        return allReminders.filter { $0.isCompleted }
     }
 } 

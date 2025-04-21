@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(macOS 11.0, *)
 struct AddListView: View {
     @EnvironmentObject var reminderManager: ReminderManager
     @Binding var isPresented: Bool

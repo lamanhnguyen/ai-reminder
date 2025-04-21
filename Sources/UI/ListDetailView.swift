@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(macOS 11.0, *)
 struct ListDetailView: View {
     @EnvironmentObject var reminderManager: ReminderManager
     let listId: UUID

@@ -3,13 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050C96C4051F6221801F1DAA /* ContentViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202B089E522F163D7EB0168 /* ContentViewTests.swift */; };
 		0C7A2EF5713A96142670C5E5 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E25B029A319C8F534140E89 /* Speech.framework */; };
+		0D499AA158D614525972479E /* CalendarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34F467619BBEBF84D38AE7B /* CalendarViewTests.swift */; };
 		0D66EF52883AD60FD9A8FDBF /* VoiceRemindersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A5CB7675A23527ECC0DD7E /* VoiceRemindersApp.swift */; };
 		0E1839DEA7716F4DE02C102B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15CFEA73FBC15A4C987F135D /* AVFoundation.framework */; };
+		29FD861ACA801C677F981D48 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923322A612ADED6CDDBB01E /* CalendarView.swift */; };
 		3E392DAD0A2FCE5D353ABE54 /* VoiceRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA7F9165C3E1C6EE5BD3897 /* VoiceRecognizer.swift */; };
 		3FA050A2A6A1A30FA8597919 /* AddListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53203D50B245DB108F63176B /* AddListView.swift */; };
 		42E88F8B1F0A488A54B39FC9 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E25B029A319C8F534140E89 /* Speech.framework */; };
@@ -17,11 +20,13 @@
 		48B348F2FD14BE612AF3AC4E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D80484C97332628386DC4 /* ContentView.swift */; };
 		5B14903CB554D7EF79C2E1AD /* ListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A291368284C7E635AC68AC /* ListDetailView.swift */; };
 		64B0717EC00FE1ACA1DFF87D /* VoiceRecognizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A6FDA46401C02CFD7E8F31 /* VoiceRecognizerTests.swift */; };
+		8EFB3E9DE2CD94EBB2E709B4 /* ReminderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EEB2797C5D817F1CC9955 /* ReminderListView.swift */; };
 		A5BD5A3A1A75F96BB3ACD0EF /* ReminderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B12DBD3BC9C00BF5CD7573 /* ReminderList.swift */; };
 		B08CE5B71571648C424FC29C /* AddReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC35C0A7037A6846BA259A5 /* AddReminderView.swift */; };
 		B422416C24E4FE85ED1FFDEC /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124D3768E7093F0FA93CFD0 /* Reminder.swift */; };
 		CE851F5BB31C4E1CD390D74A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D11D2A134195E5E3778556 /* UserNotifications.framework */; };
 		EACF153CB6C5D4621C7388E5 /* ReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD66398809785CFECB828219 /* ReminderManager.swift */; };
+		F341BA6C294F2A3790563651 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A2A926C46CADED2FBDDFE36 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,22 +40,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0202B089E522F163D7EB0168 /* ContentViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTests.swift; sourceTree = "<group>"; };
 		02A5CB7675A23527ECC0DD7E /* VoiceRemindersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRemindersApp.swift; sourceTree = "<group>"; };
 		15CFEA73FBC15A4C987F135D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		28D11D2A134195E5E3778556 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		2A2A926C46CADED2FBDDFE36 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39A291368284C7E635AC68AC /* ListDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailView.swift; sourceTree = "<group>"; };
 		3E25B029A319C8F534140E89 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
 		47B12DBD3BC9C00BF5CD7573 /* ReminderList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderList.swift; sourceTree = "<group>"; };
 		53203D50B245DB108F63176B /* AddListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListView.swift; sourceTree = "<group>"; };
+		5923322A612ADED6CDDBB01E /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		7AC35C0A7037A6846BA259A5 /* AddReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderView.swift; sourceTree = "<group>"; };
+		8C8EEB2797C5D817F1CC9955 /* ReminderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListView.swift; sourceTree = "<group>"; };
 		8D2D80484C97332628386DC4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		8DDFE03F9C859718E71B74F5 /* VoiceRemindersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoiceRemindersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DDFE03F9C859718E71B74F5 /* VoiceRemindersTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = VoiceRemindersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96A6FDA46401C02CFD7E8F31 /* VoiceRecognizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecognizerTests.swift; sourceTree = "<group>"; };
 		C124D3768E7093F0FA93CFD0 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		D34F467619BBEBF84D38AE7B /* CalendarViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewTests.swift; sourceTree = "<group>"; };
 		DD66398809785CFECB828219 /* ReminderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderManager.swift; sourceTree = "<group>"; };
 		FAA7F9165C3E1C6EE5BD3897 /* VoiceRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecognizer.swift; sourceTree = "<group>"; };
 		FB3EA05FF4EC7D6D7695E071 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		FE67F0681A6DBA29B939D588 /* VoiceReminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoiceReminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE67F0681A6DBA29B939D588 /* VoiceReminders.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = VoiceReminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +98,7 @@
 		50FB5006EED863DC0BDD676A = {
 			isa = PBXGroup;
 			children = (
+				2A2A926C46CADED2FBDDFE36 /* LaunchScreen.storyboard */,
 				87E5E1CD20F5DAADD6480CE3 /* Sources */,
 				626A62828DEFDBA2C53393C2 /* Tests */,
 				AF484305FB47F4FA35EC6724 /* Frameworks */,
@@ -108,8 +119,10 @@
 			children = (
 				53203D50B245DB108F63176B /* AddListView.swift */,
 				7AC35C0A7037A6846BA259A5 /* AddReminderView.swift */,
+				5923322A612ADED6CDDBB01E /* CalendarView.swift */,
 				8D2D80484C97332628386DC4 /* ContentView.swift */,
 				39A291368284C7E635AC68AC /* ListDetailView.swift */,
+				8C8EEB2797C5D817F1CC9955 /* ReminderListView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -117,6 +130,8 @@
 		626A62828DEFDBA2C53393C2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				D34F467619BBEBF84D38AE7B /* CalendarViewTests.swift */,
+				0202B089E522F163D7EB0168 /* ContentViewTests.swift */,
 				FB3EA05FF4EC7D6D7695E071 /* Info.plist */,
 				96A6FDA46401C02CFD7E8F31 /* VoiceRecognizerTests.swift */,
 			);
@@ -170,6 +185,7 @@
 			buildConfigurationList = 6F0BF67978C35EC5A7612469 /* Build configuration list for PBXNativeTarget "VoiceReminders" */;
 			buildPhases = (
 				ED2089AC859AD3B66380719B /* Sources */,
+				40B4F6B960F4025F2D92F6AB /* Resources */,
 				9B24882D2EA52A92FF91F241 /* Frameworks */,
 			);
 			buildRules = (
@@ -205,7 +221,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					670817ADB2E5300A5FF3109F = {
+						DevelopmentTeam = "";
+					};
+				};
 			};
 			buildConfigurationList = 2DDC8BDD48A20E6AC832ACBA /* Build configuration list for PBXProject "VoiceReminders" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -225,11 +246,24 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		40B4F6B960F4025F2D92F6AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F341BA6C294F2A3790563651 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3FAA8178B9BBF3686584154E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D499AA158D614525972479E /* CalendarViewTests.swift in Sources */,
+				050C96C4051F6221801F1DAA /* ContentViewTests.swift in Sources */,
 				64B0717EC00FE1ACA1DFF87D /* VoiceRecognizerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,10 +274,12 @@
 			files = (
 				3FA050A2A6A1A30FA8597919 /* AddListView.swift in Sources */,
 				B08CE5B71571648C424FC29C /* AddReminderView.swift in Sources */,
+				29FD861ACA801C677F981D48 /* CalendarView.swift in Sources */,
 				48B348F2FD14BE612AF3AC4E /* ContentView.swift in Sources */,
 				5B14903CB554D7EF79C2E1AD /* ListDetailView.swift in Sources */,
 				B422416C24E4FE85ED1FFDEC /* Reminder.swift in Sources */,
 				A5BD5A3A1A75F96BB3ACD0EF /* ReminderList.swift in Sources */,
+				8EFB3E9DE2CD94EBB2E709B4 /* ReminderListView.swift in Sources */,
 				EACF153CB6C5D4621C7388E5 /* ReminderManager.swift in Sources */,
 				3E392DAD0A2FCE5D353ABE54 /* VoiceRecognizer.swift in Sources */,
 				0D66EF52883AD60FD9A8FDBF /* VoiceRemindersApp.swift in Sources */,
@@ -266,12 +302,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 95PSS884KX;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				INFOPLIST_KEY_CFBundleDisplayName = VoiceReminders;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.VoiceReminders;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -282,7 +317,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 95PSS884KX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -421,12 +455,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 95PSS884KX;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				INFOPLIST_KEY_CFBundleDisplayName = VoiceReminders;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.VoiceReminders;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -437,7 +470,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 95PSS884KX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

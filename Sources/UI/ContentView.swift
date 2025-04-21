@@ -1,6 +1,39 @@
 import SwiftUI
 import AVFoundation
 
+// Declare CalendarFilter enum as public so it can be accessed by other files
+public enum CalendarFilter {
+    case today
+    case scheduled
+    
+    var title: String {
+        switch self {
+        case .today:
+            return "Today"
+        case .scheduled:
+            return "Scheduled"
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .today:
+            return "calendar"
+        case .scheduled:
+            return "calendar.badge.clock"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .today:
+            return .blue
+        case .scheduled:
+            return .red
+        }
+    }
+}
+
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
@@ -27,101 +60,171 @@ extension Color {
     }
 }
 
+@available(macOS 11.0, *)
 struct ContentView: View {
     @EnvironmentObject var reminderManager: ReminderManager
     @EnvironmentObject var voiceRecognizer: VoiceRecognizer
+    @AppStorage("selectedListId") private var selectedListIdString: String?
     @State private var isAddingList = false
-    @State private var isAddingReminder = false
-    @State private var selectedListId: UUID?
     @State private var searchText = ""
+    @State private var isSearching = false
+    @State private var calendarFilter: CalendarFilter?
     
-    // To prevent auto-selection infinite loop
-    @State private var hasInitialized = false
+    private var selectedListId: UUID? {
+        guard let idString = selectedListIdString else { return nil }
+        return UUID(uuidString: idString)
+    }
     
-    // Initialize with the selected list from ReminderManager
-    init() {
-        let savedIdString = UserDefaults.standard.string(forKey: "selectedListId")
-        if let idString = savedIdString, let uuid = UUID(uuidString: idString) {
-            _selectedListId = State(initialValue: uuid)
+    private var filteredLists: [ReminderList] {
+        guard !searchText.isEmpty else { return reminderManager.lists }
+        return reminderManager.lists.filter { list in
+            list.name.localizedCaseInsensitiveContains(searchText)
         }
     }
     
     var body: some View {
-        NavigationSplitView {
-            List(selection: $selectedListId) {
-                // Quick filters section
-                Section {
-                    QuickFilterRow(icon: "calendar", title: "Today", count: 3, color: .blue)
-                    QuickFilterRow(icon: "calendar.badge.clock", title: "Scheduled", count: 8, color: .red)
-                    QuickFilterRow(icon: "flag", title: "Flagged", count: 0, color: .orange)
-                    QuickFilterRow(icon: "checkmark.circle.fill", title: "Completed", count: 0, color: .gray)
+        #if os(iOS)
+        NavigationView {
+            SidebarView(
+                searchText: $searchText,
+                isSearching: $isSearching,
+                calendarFilter: $calendarFilter,
+                isAddingList: $isAddingList,
+                selectedListIdString: $selectedListIdString,
+                filteredLists: filteredLists
+            )
+            .navigationBarTitleDisplayMode(.inline)
+            
+            Group {
+                if let filter = calendarFilter {
+                    CalendarView(filter: filter)
+                } else if let id = selectedListId,
+                          let list = reminderManager.lists.first(where: { $0.id == id }) {
+                    ReminderListView(list: list)
+                } else {
+                    VStack {
+                        Image(systemName: "list.bullet")
+                            .font(.system(size: 50))
+                            .foregroundColor(.secondary)
+                            .padding()
+                        Text("Select a list")
+                            .font(.headline)
+                        Text("Choose a reminder list from the sidebar")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.gray.opacity(0.1))
+                }
+            }
+        }
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
+        #else
+        Text("MacOS UI not implemented yet")
+        #endif
+    }
+}
+
+@available(macOS 11.0, *)
+struct SidebarView: View {
+    @EnvironmentObject var reminderManager: ReminderManager
+    @Binding var searchText: String
+    @Binding var isSearching: Bool
+    @Binding var calendarFilter: CalendarFilter?
+    @Binding var isAddingList: Bool
+    @Binding var selectedListIdString: String?
+    let filteredLists: [ReminderList]
+    
+    private var quickFilters: [(CalendarFilter, String, String, Color)] {
+        [
+            (.today, "calendar", "Today", Color.blue),
+            (.scheduled, "calendar.badge.clock", "Scheduled", Color.red)
+        ]
+    }
+    
+    var body: some View {
+        List {
+            Section {
+                ForEach(quickFilters, id: \.1) { filter, icon, title, color in
+                    Button {
+                        calendarFilter = filter
+                        selectedListIdString = nil
+                    } label: {
+                        QuickFilterRow(
+                            icon: icon,
+                            title: title,
+                            count: getTodayOrScheduledCount(filter: filter),
+                            color: color
+                        )
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+            
+            Section(header: Text("MY LISTS")) {
+                ForEach(filteredLists) { list in
+                    Button {
+                        selectedListIdString = list.id.uuidString
+                        calendarFilter = nil
+                    } label: {
+                        HStack {
+                            Image(systemName: "list.bullet.circle.fill")
+                                .foregroundColor(Color(hex: list.color))
+                            Text(list.name)
+                            Spacer()
+                            Text("\(list.reminders.count)")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
                 
-                // My Lists section
-                Section(header: Text("My Lists")) {
-                    ForEach(reminderManager.lists) { list in
-                        NavigationLink(value: list.id) {
-                            HStack {
-                                Circle()
-                                    .fill(Color(hex: list.color))
-                                    .frame(width: 10, height: 10)
-                                Text(list.name)
-                                Spacer()
-                                Text("\(list.reminders.count)")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        .id(list.id)
-                        .tag(list.id)
-                    }
-                    Button(action: { isAddingList = true }) {
-                        HStack {
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundColor(.blue)
-                            Text("Add List")
-                        }
-                    }
+                Button(action: { isAddingList = true }) {
+                    Label("Add List", systemImage: "plus.circle.fill")
+                        .foregroundColor(Color.blue)
                 }
             }
-            .onChange(of: selectedListId) { newValue in
-                if let listId = newValue {
-                    print("Selected list ID: \(listId)")
-                    // Save selection to UserDefaults
-                    UserDefaults.standard.set(listId.uuidString, forKey: "selectedListId")
+        }
+        .listStyle(SidebarListStyle())
+        .navigationTitle("Reminders")
+        #if os(iOS)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    isSearching.toggle()
+                }) {
+                    Image(systemName: "magnifyingglass")
                 }
             }
-            .navigationTitle("Reminders")
-            .searchable(text: $searchText, prompt: "Search")
-        } detail: {
-            if let selectedId = selectedListId,
-               reminderManager.lists.contains(where: { $0.id == selectedId }) {
-                ListDetailView(listId: selectedId)
-                    .id(selectedId) // Ensure view refreshes when selection changes
-            } else {
-                Text("Select a list")
-                    .foregroundColor(.secondary)
-                    .onAppear {
-                        if !reminderManager.lists.isEmpty && selectedListId == nil && !hasInitialized {
-                            hasInitialized = true
-                            DispatchQueue.main.async {
-                                selectedListId = reminderManager.lists[0].id
-                            }
-                        }
+        }
+        .overlay(
+            Group {
+                if isSearching {
+                    VStack {
+                        TextField("Search", text: $searchText)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding()
+                        Spacer()
                     }
+                    .background(Color(.systemBackground))
+                    .transition(.move(edge: .top))
+                }
             }
-        }
-        .onAppear {
-            // Initialize selection if needed - but only once
-            if selectedListId == nil && !reminderManager.lists.isEmpty && !hasInitialized {
-                hasInitialized = true
-                selectedListId = reminderManager.lists[0].id
-                print("Setting initial selection to: \(reminderManager.lists[0].id)")
-            }
-        }
+        )
+        #endif
         .sheet(isPresented: $isAddingList) {
             NavigationView {
                 AddListView(isPresented: $isAddingList)
             }
+        }
+    }
+    
+    private func getTodayOrScheduledCount(filter: CalendarFilter) -> Int {
+        switch filter {
+        case .today:
+            return reminderManager.getTodayReminders().count
+        case .scheduled:
+            return reminderManager.getScheduledReminders().count
         }
     }
 }
@@ -133,20 +236,26 @@ struct QuickFilterRow: View {
     let color: Color
     
     var body: some View {
-        HStack {
+        Label {
+            HStack {
+                Text(title)
+                Spacer()
+                Text("\(count)")
+                    .foregroundColor(.secondary)
+            }
+        } icon: {
             Image(systemName: icon)
                 .foregroundColor(color)
                 .frame(width: 24)
-            Text(title)
-            Spacer()
-            Text("\(count)")
-                .foregroundColor(.secondary)
         }
     }
 }
 
-#Preview {
-    ContentView()
-        .environmentObject(ReminderManager())
-        .environmentObject(VoiceRecognizer(audioEngine: AVAudioEngine()))
+@available(macOS 11.0, *)
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .environmentObject(ReminderManager())
+            .environmentObject(VoiceRecognizer(audioEngine: AVAudioEngine()))
+    }
 } 

@@ -1,0 +1,4 @@
+module VoiceRemindersPackageTests {
+    header "/Users/macmini/Documents/VoiceReminders/.build/arm64-apple-macosx/debug/VoiceRemindersPackageTests.build/VoiceRemindersPackageTests-Swift.h"
+    requires objc
+}

@@ -1,6 +1,7 @@
 import SwiftUI
 import AVFoundation
 
+@available(macOS 11.0, *)
 struct AddReminderView: View {
     @Binding var isPresented: Bool
     let listId: UUID
@@ -23,6 +24,9 @@ struct AddReminderView: View {
     // Validation state
     @State private var showTitleError = false
     @State private var showDateError = false
+    
+    // State for voice recording
+    @State private var isRecording = false
     
     init(isPresented: Binding<Bool>, listId: UUID, initialDate: Date = Date()) {
         self._isPresented = isPresented
@@ -64,6 +68,12 @@ struct AddReminderView: View {
                     // Notes field
                     TextField("Add notes", text: $notes)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                    // Add voice input section
+                    VoiceInputSection(isRecording: $isRecording) { recognizedText in
+                        title = recognizedText
+                    }
+                    .padding(.vertical, 8)
                 }
                 
                 Section(header: Text("Date & Time")) {
@@ -177,6 +187,7 @@ struct AddReminderView: View {
     }
 }
 
+@available(macOS 11.0, *)
 struct VoiceInputSection: View {
     @EnvironmentObject private var voiceRecognizer: VoiceRecognizer
     @Binding var isRecording: Bool
